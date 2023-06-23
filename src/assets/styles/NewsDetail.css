@@ -1,0 +1,44 @@
+.news-detail{
+    display: flex;
+    padding-top: 5%;
+    margin: 3% 10%;
+    flex-wrap: wrap 
+}
+.news-detail-left{
+    flex: 60;
+
+}
+.news-detail-right{
+  
+    flex:40;
+    display: flex;
+}
+.news-detail-right-first{
+   flex: 20;
+}
+
+.news-detail-right-second{
+    flex: 80;
+    padding-top: 20%;
+ }
+
+
+@media (max-width: 800px){
+    .news-detail-right-first{
+        flex: 0;
+    }
+    .news-detail{
+        margin-top: 10%;
+    }
+    .news-detail{
+        margin: 2% 3%;
+    }
+    /* .news-detail-right{
+        flex: 0;
+    } */
+
+
+}
+    
+
+

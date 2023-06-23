@@ -1,0 +1,54 @@
+/* sport page css */
+.category-component-title{
+    background-color: whitesmoke;
+    height: 30vh;
+    padding: 0% 10%;
+
+}
+.category-component-title > h1 {
+    padding-top: 10vh;
+}
+.category-component-body{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 3% 10% ;
+}
+.category-component-body-left{
+    flex: 70%;
+
+}
+.category-component-body-right{
+    flex: 30%;
+    /* padding-left: 3%; */
+    
+}
+.right-category{
+    display: flex;
+    margin-bottom: 3%;
+
+}
+
+@media (max-width: 800px){
+    .category-component-body{
+        margin: 3% 10vw;
+    }
+    .category-component-body-left{
+        flex: 100%;
+    
+    }
+    .category-component-body-right{
+        flex: 0%;
+        
+    }
+    #category-image{
+        width: 80vw !important;
+    }
+    .right-category{
+        flex-wrap: wrap;
+    
+    }
+}
+    
+
+
+

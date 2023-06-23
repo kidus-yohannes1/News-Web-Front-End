@@ -1,0 +1,29 @@
+#components-form-demo-normal-login .login-form {
+    max-width: 300px;
+  }
+  #components-form-demo-normal-login .login-form-forgot {
+    float: right;
+  }
+  #components-form-demo-normal-login .ant-col-rtl .login-form-forgot {
+    float: left;
+  }
+  #components-form-demo-normal-login .login-form-button {
+    width: 100%;
+  }
+  .login-form{
+    max-width: 300px;
+    margin-left: 35vw;
+    margin-top: 20vh;
+    background-color: whitesmoke;
+    padding: 2%;
+  }
+
+@media (max-width: 800px){
+  .login-form{
+    margin-left: 0vw;
+    max-width: 100vw !important;
+    padding-top: 10%;
+    padding-bottom: 10%;
+    border-radius: 20px;
+  }
+}

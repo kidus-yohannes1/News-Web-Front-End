@@ -1,0 +1,33 @@
+
+.dashboard{
+    background-color: whitesmoke;
+    width: "80vw"
+}
+.dashboard-top{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1% 6%;
+  
+}
+.dashboard-top-left{
+    flex: 40;
+}
+.dashboard-top-right{
+    flex:60;
+    display: flex;
+    flex-wrap: wrap;
+}
+.dashboard-bottom{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1% 6%;
+  
+}
+.dashboard-bottom-left{
+    flex: 30;
+}
+.dashboard-bottom-right{
+    flex:70;
+    display: flex;
+    flex-wrap: wrap;
+}
