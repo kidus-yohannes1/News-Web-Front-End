@@ -54,10 +54,12 @@ function RecentNews(props: { recentNews: News[]; banner: News[] }) {
                   <Tag className="right-recent-discription-tag" color={"white"}>
                     {recentItem.tag}
                   </Tag>
-                  <h3>{recentItem.title}</h3>{" "}
-                  <p className="right-recent-discription-p">
-                    {recentItem.author}
-                  </p>
+                  <div className="news-home-tab-disc">
+                    <h3>{recentItem.title}</h3>{" "}
+                    <p className="right-recent-discription-p">
+                      {recentItem.author}
+                    </p>
+                  </div>
                 </div>
               </div>
             </Link>

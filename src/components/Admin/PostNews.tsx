@@ -7,6 +7,7 @@ function PostNews() {
   const [titleDescription, setTitleDescription] = useState("");
   const [newsDescription, setNewsDescription] = useState("");
   const [tag, setTag] = useState("");
+  const [hashTag, setHashTag] = useState("");
   const [category, setCategory] = useState("");
   const [author, setAuthor] = useState("");
   const [previewImage, setPreviewImage] = useState("");
@@ -26,6 +27,7 @@ function PostNews() {
     formData.append("newsDescription", newsDescription);
     formData.append("author", author);
     formData.append("tag", tag);
+    formData.append("hashTag", hashTag);
     formData.append("categoryId", category);
     formData.append("picture", selectedFile as any);
     // let image = document.getElementById("fileInput");
@@ -64,12 +66,15 @@ function PostNews() {
         <Form.Item label="Tag">
           <Input onChange={(e) => setTag(e.target.value)} />
         </Form.Item>
+        <Form.Item label="Hash-Tag">
+          <Input onChange={(e) => setHashTag(e.target.value)} />
+        </Form.Item>
         <Form.Item label="Category">
           <Select onSelect={(e) => setCategory(e)}>
-            <Select.Option value="5">Sport</Select.Option>
-            <Select.Option value="6">Technology</Select.Option>
-            <Select.Option value="7">Fashion</Select.Option>
-            <Select.Option value="8">politics</Select.Option>
+            <Select.Option value="1">Sport</Select.Option>
+            <Select.Option value="2">Technology</Select.Option>
+            <Select.Option value="3">Fashion</Select.Option>
+            <Select.Option value="4">politics</Select.Option>
           </Select>
         </Form.Item>
         <Form.Item label="Author">

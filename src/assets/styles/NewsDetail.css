@@ -1,8 +1,9 @@
 .news-detail{
     display: flex;
-    padding-top: 5%;
+    padding-top: 1%;
     margin: 3% 10%;
-    flex-wrap: wrap 
+    flex-wrap: wrap ;
+    padding-bottom: 10%;
 }
 .news-detail-left{
     flex: 60;
@@ -21,9 +22,22 @@
     flex: 80;
     padding-top: 20%;
  }
+ .news-home-tab-disc{
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
 
 
-@media (max-width: 800px){
+@media (max-width: 900px){
+    .news-detail-left{
+        flex: 100 !important;
+        width: 100%;
+    }
+    .news-detail-right{
+        flex: 100 !important;
+    }
     .news-detail-right-first{
         flex: 0;
     }

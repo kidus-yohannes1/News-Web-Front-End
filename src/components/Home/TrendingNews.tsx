@@ -27,8 +27,10 @@ function TrendingNews(props: { trendingNews: News[] }) {
               <Tag style={{ backgroundColor: "red" }} color={"white"}>
                 {trendingNews.tag}
               </Tag>
-              <h3>{trendingNews.title}</h3>
-              <p style={{ color: "gray" }}> {trendingNews.author}</p>
+              <div className="news-home-tab-disc">
+                <h3>{trendingNews.title}</h3>
+                <p style={{ color: "gray" }}> {trendingNews.author}</p>
+              </div>
             </div>
           </div>
         ))}

@@ -53,16 +53,12 @@ function Admin1() {
   let { name } = useParams();
 
   const [collapsed, setCollapsed] = useState(false);
-  const [selectedTab, setSelectedTab] = useState("dashBoard");
 
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
   const onClick: MenuProps["onClick"] = (e) => {
     console.log(e);
 
     if (e.key === "1") {
-      window.location.href = "/admin/dashboard";
+      window.location.href = "/admin/";
       // setSelectedTab("");
     }
     if (e.key === "2") {
@@ -81,13 +77,6 @@ function Admin1() {
       style={{ display: "flex", backgroundColor: "whitesmoke" }}
     >
       <div style={{ width: 256, backgroundColor: "black", height: "100vh" }}>
-        <Button
-          type="primary"
-          onClick={toggleCollapsed}
-          style={{ marginBottom: 16 }}
-        >
-          {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-        </Button>
         <Menu
           onClick={onClick}
           // defaultSelectedKeys={["1"]}

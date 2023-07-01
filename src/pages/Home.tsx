@@ -17,6 +17,7 @@ function Home() {
     TopStories: [],
     TreandingNews: [],
   });
+  console.log(data);
 
   useEffect(() => {
     (async () => {

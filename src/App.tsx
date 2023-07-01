@@ -28,21 +28,23 @@ function App() {
       </NavBar> */}
 
       <BrowserRouter>
-        <NavBar />
+        {/* <NavBar /> */}
         <Routes>
-          <Route index element={<Home />} />
-          <Route path="/sport" element={<Sport />} />
-          <Route path="/entertainment" element={<Entertainment />} />
-          <Route path="/politics" element={<Politics />} />
+          <Route path="/" element={<NavBar />}>
+            <Route index element={<Home />} />
+            <Route path="/sport" element={<Sport />} />
+            <Route path="/entertainment" element={<Entertainment />} />
+            <Route path="/politics" element={<Politics />} />
+            <Route path="/detail" element={<NewsDetail />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/nebil" element={<Todo />} />
+          </Route>
           <Route path="/admin" element={<Admin />}>
-            <Route path="dashboard" element={<DashBoard />} />
+            <Route index element={<DashBoard />} />
             <Route path="newslist" element={<NewsList />} />
             <Route path="postnews" element={<PostNews />} />
           </Route>
           {/* <Route path="/admin2/:name" element={<Admin2 />} /> */}
-          <Route path="/detail" element={<NewsDetail />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/nebil" element={<Todo />} />
           <Route path="*" element={<PageNoFound />} />
         </Routes>
       </BrowserRouter>
