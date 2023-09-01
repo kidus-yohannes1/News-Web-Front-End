@@ -2,6 +2,10 @@ import React from "react";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import "../assets/styles/NavBar.css";
 import { Outlet } from "react-router-dom";
+import { SearchOutlined } from "@ant-design/icons";
+import { Input, Space } from "antd";
+
+const { Search } = Input;
 
 const { Header, Content, Footer } = Layout;
 
@@ -16,6 +20,7 @@ function NavBar() {
       }
     }
   }
+  const onSearch = (value: string) => console.log(value);
 
   return (
     <>
@@ -40,6 +45,15 @@ function NavBar() {
         </a>
         <a style={{ paddingTop: "2%" }} href="/politics">
           <h3>Politics</h3>
+        </a>
+        <a className="search" style={{ paddingTop: "2%", marginLeft: "30vw" }}>
+          <h3>
+            <Search
+              placeholder="search news"
+              onSearch={onSearch}
+              style={{ width: 300 }}
+            />
+          </h3>
         </a>
         <a
           href="javascript:void(0);"

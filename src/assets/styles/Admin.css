@@ -31,3 +31,28 @@
     display: flex;
     flex-wrap: wrap;
 }
+.users-list-title{
+    padding-top: 5%;
+    display: flex;
+    justify-content: space-between;
+}
+.users-list-table{
+    padding-top: 4%;
+
+}
+.users-add-title{
+    padding-top: 5%;
+    display: flex;
+    justify-content: space-between;
+    width: 79vw;
+    margin-left: 3%;
+}
+.news-list-title{
+    padding-top: 5%;
+    display: flex;
+    justify-content: space-between;
+
+}
+.news-list-table{
+    padding-top: 4%;
+}

@@ -9,6 +9,7 @@ export interface News {
   picture: string;
   CreatedAt: string;
   categoryId: number;
+  userId: number;
 }
 
 export interface IHome {
@@ -28,4 +29,14 @@ export interface postRequest {
   headers: Headers;
   body: URLSearchParams;
   redirect: "follow";
+}
+export interface IUser {
+  id: number;
+  name: string;
+  userName: string;
+  email: string;
+  password: string;
+  role: string;
+  token: any;
+  CreatedAt: string;
 }

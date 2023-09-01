@@ -1,12 +1,14 @@
 import { Tag } from "antd";
 import { useEffect, useState } from "react";
 import "../assets/styles/Category.css";
+import Footer from "../components/Footer";
+import YouAlsolLike from "../components/YouAlsoLike";
 import { News } from "../hooks/newsHook";
 function Sport() {
   const [Sport, setSport] = useState<News[]>([]);
   const [data, setData] = useState<News[]>([]);
   useEffect(() => {
-    fetch("http://localhost:4000/api/news/category/2")
+    fetch("http://localhost:4000/api/news/category/4")
       .then((response) => response.json())
       .then((json) => setSport(json.data));
   }, []);
@@ -37,11 +39,21 @@ function Sport() {
                   />
                 </div>
 
-                <div style={{ paddingLeft: "3%" }}>
-                  <Tag style={{ backgroundColor: "red" }} color={"white"}>
-                    {sportnews.tag}
-                  </Tag>
-                  <h3>{sportnews.title}</h3>
+                <div
+                  style={{
+                    paddingLeft: "3%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-around",
+                  }}
+                >
+                  <div>
+                    <Tag style={{ backgroundColor: "red" }} color={"white"}>
+                      {sportnews.tag}
+                    </Tag>
+                  </div>
+
+                  <h2>{sportnews.title}</h2>
                   <p>{sportnews.titleDescription}</p>
                   <p style={{ color: "gray" }}> {sportnews.author}</p>
                 </div>
@@ -54,39 +66,13 @@ function Sport() {
                 <div style={{ flex: 10 }}></div>
                 <div style={{ flex: 90 }}>
                   <h2>You may also like</h2>
-                  {data.map((recentItem, index) => (
-                    <div key={index} className="right-recent">
-                      <div>
-                        <img
-                          className="right-recent-image"
-                          alt="example"
-                          style={{
-                            width: "140px",
-                            height: "140px",
-                          }}
-                          src={`${recentItem.picture}`}
-                        />
-                      </div>
-
-                      <div className="right-recent-discription">
-                        <Tag
-                          className="right-recent-discription-tag"
-                          color={"white"}
-                        >
-                          {recentItem.tag}
-                        </Tag>
-                        <h5>{recentItem.title}</h5>
-                        <p className="right-recent-discription-p">
-                          {recentItem.author}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                  <YouAlsolLike />
                 </div>
               </div>
             ) : null}
           </div>
         </div>
+        <Footer />
       </div>
     );
   }

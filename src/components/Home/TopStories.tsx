@@ -40,7 +40,6 @@ function TopStories(props: { topStories: News[] }) {
     <div className="top-stories">
       <div className="top-stories-title">
         <h1>Top Stories</h1>
-        <h3>All Top Stories</h3>
       </div>
       <div className="top-stories-body">
         <div

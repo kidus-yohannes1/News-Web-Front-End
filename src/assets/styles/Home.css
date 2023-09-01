@@ -26,7 +26,7 @@
 }
 
 .right-child{
-padding-left: 4%;
+padding-left: 5%;
 }
 .right-recent-discription{
     padding-left: 3%;
@@ -47,6 +47,7 @@ padding-left: 4%;
 .landingImage{
     transition: 0.5s all ease-in-out;
     max-height: 70vh;
+    min-height: 70vh;
 }
 
 .landingImage:hover{
@@ -78,9 +79,7 @@ padding-left: 4%;
 
 }
 .top-stories-title{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+   
     margin: 0 10%;
 
 }
@@ -138,9 +137,6 @@ padding-left: 4%;
 /* trending stories css */
 
 .trending-stories-title{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     margin: 5% 10% 0% 10%;
 
 }
@@ -231,8 +227,15 @@ h1:hover{
     .HomeDiv{
         margin-top: 10%;
     }
+    .landingImage{
+        min-height: 40vh;
+    }
     .Recent-news-left, .Recent-news-right{
         flex: 100%;
+       
+    }
+    .Recent-news-right{
+        padding-top: 5%;
     }
     .right-child{
         padding-left: 0%;
@@ -240,6 +243,11 @@ h1:hover{
     .top-stories-body-left, .top-stories-body-right{
         flex: 100%;
       
+    }
+    .top-stories-body{
+        padding-top: 0%;
+        margin-top: 0% !important;
+        
     }
     .top-stories-body-left{
         height: 250px;
@@ -265,6 +273,8 @@ h1:hover{
     }
     .top-video-body{
         margin: 2% 3% !important;
+        padding: 2% 0% 10% 0%;
+
 
 
     }
@@ -293,6 +303,11 @@ h1:hover{
     .right-sport{
         flex-wrap: wrap;
     
+    }
+    .advertisment-img{
+        min-height: 35vh;
+        padding-top: 2vh;
+
     }
 }
     

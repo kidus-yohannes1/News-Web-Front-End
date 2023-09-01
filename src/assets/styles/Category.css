@@ -3,6 +3,7 @@
     background-color: whitesmoke;
     height: 30vh;
     padding: 0% 10%;
+    justify-content: center;
 
 }
 .category-component-title > h1 {
@@ -29,8 +30,11 @@
 }
 
 @media (max-width: 800px){
+    .category-component-title{
+        height: 20vh;
+    }
     .category-component-body{
-        margin: 3% 10vw;
+        margin: 3% 5vw;
     }
     .category-component-body-left{
         flex: 100%;
@@ -41,12 +45,13 @@
         
     }
     #category-image{
-        width: 80vw !important;
+        width: 90vw !important;
     }
     .right-category{
         flex-wrap: wrap;
     
     }
+
 }
     
 

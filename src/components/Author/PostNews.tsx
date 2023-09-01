@@ -3,7 +3,7 @@ import TextArea from "antd/es/input/TextArea";
 import { useContext, useState } from "react";
 import { userContext } from "../../App";
 
-function PostNews() {
+function AuthorPostNews() {
   const [title, setTitle] = useState("");
   const [titleDescription, setTitleDescription] = useState("");
   const [newsDescription, setNewsDescription] = useState("");
@@ -16,6 +16,7 @@ function PostNews() {
   const [fileList, setFileList] = useState(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [user, setUser] = useState(useContext(userContext));
+  // alert(user.name);
 
   const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
@@ -35,6 +36,10 @@ function PostNews() {
     formData.append("picture", selectedFile as any);
     // let image = document.getElementById("fileInput");
     // for (let i = 0; i < fileList.length; i++) {}
+    console.log("111111111111111111");
+
+    console.log(user);
+
     fetch("http://localhost:4000/api/news", {
       method: "POST",
       body: formData,
@@ -113,9 +118,9 @@ function PostNews() {
               <Select.Option value="4">politics</Select.Option>
             </Select>
           </Form.Item>
-          <Form.Item label="Author" name="Author" rules={[{ required: true }]}>
+          {/* <Form.Item label="Author" name="Author" rules={[{ required: true }]}>
             <Input onChange={(e) => setAuthor(e.target.value)} />
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item
             label="Upload"
             name="Upload"
@@ -141,4 +146,4 @@ function PostNews() {
     </div>
   );
 }
-export default PostNews;
+export default AuthorPostNews;

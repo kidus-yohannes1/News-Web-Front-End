@@ -7,7 +7,6 @@ function TrendingNews(props: { trendingNews: News[] }) {
     <div className="trending-stories">
       <div className="trending-stories-title">
         <h1>Trending Stories</h1>
-        <h3>Trending Stories</h3>
       </div>
       <div className="trending-stories-body">
         {props.trendingNews.map((trendingNews: News, index: any) => (

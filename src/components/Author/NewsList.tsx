@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Radio, Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { News } from "../../hooks/newsHook";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { userContext } from "../../App";
 
 interface DataType {
   key: string;
@@ -51,11 +52,11 @@ const columns: ColumnsType<News> = [
   },
 ];
 
-function NewsList() {
+function AuthorNewsList() {
   const [newsList, setNewsList] = useState<News[]>([]);
-
+  const [user, setUser] = useState(useContext(userContext));
   useEffect(() => {
-    fetch("http://localhost:4000/api/news")
+    fetch(`http://localhost:4000/api/my/${user.id}`)
       .then((response) => response.json())
       .then((json) => setNewsList(json.data));
   }, []);
@@ -86,4 +87,4 @@ function NewsList() {
   }
 }
 
-export default NewsList;
+export default AuthorNewsList;

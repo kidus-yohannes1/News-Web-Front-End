@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
 import "../assets/styles/Login.css";
 import { postRequest } from "../hooks/newsHook";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
 
-const Login: React.FC = () => {
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const onFinish = (values: any) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     var urlencoded = new URLSearchParams();
-    urlencoded.append("userName", values.username);
-    urlencoded.append("password", values.password);
+    urlencoded.append("email", email);
+    urlencoded.append("password", password);
+    const cookies = new Cookies();
 
     var requestOptions: any = {
       method: "POST",
@@ -21,11 +26,24 @@ const Login: React.FC = () => {
       redirect: "follow",
     };
 
-    fetch("http://localhost:4000/user/login", requestOptions)
+    fetch("http://localhost:4000/users/login", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        if (result.message == "success") {
-          window.location.href = `/admin2/${result.data.userName}`;
+        console.log(result);
+
+        if (result.success == true && result.data.role == "admin") {
+          cookies.remove("token", { path: "/" });
+          cookies.remove("name", { path: "/" });
+          cookies.set("token", result.data.token, { path: "/" });
+          cookies.set("name", result.data.userName, { path: "/" });
+          window.location.href = `/admin`;
+        }
+        if (result.success == true && result.data.role == "author") {
+          cookies.remove("token", { path: "/" });
+          cookies.remove("name", { path: "/" });
+          cookies.set("token", result.data.token, { path: "/" });
+          cookies.set("name", result.data.userName, { path: "/" });
+          window.location.href = `/author`;
         } else {
           alert(result.message);
         }
@@ -40,13 +58,11 @@ const Login: React.FC = () => {
       initialValues={{ remember: true }}
       onFinish={onFinish}
     >
-      <Form.Item
-        name="username"
-        rules={[{ required: true, message: "Please input your Username!" }]}
-      >
+      <Form.Item name="Email" rules={[{ required: true, type: "email" }]}>
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Username"
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="email"
         />
       </Form.Item>
       <Form.Item
@@ -56,6 +72,7 @@ const Login: React.FC = () => {
         <Input
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
       </Form.Item>
@@ -77,6 +94,6 @@ const Login: React.FC = () => {
       </Form.Item>
     </Form>
   );
-};
+}
 
 export default Login;

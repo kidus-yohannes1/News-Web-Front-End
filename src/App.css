@@ -1,3 +1,9 @@
 body{
     margin: 0px;
 }
+@media (max-width: 800px){
+    .search{
+        margin-left: 0vh !important;
+    }
+}
+

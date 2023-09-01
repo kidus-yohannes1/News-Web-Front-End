@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext, useContext } from "react";
 import {
-  AppstoreOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
   LogoutOutlined,
   MailOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
   PieChartOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
@@ -17,6 +12,7 @@ import PageNoFound from "./PageNotFound";
 import logo from "../assets/images/hagereLogo2.png";
 import Cookies from "universal-cookie";
 import { Player } from "@lottiefiles/react-lottie-player";
+import { userContext } from "../App";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -37,53 +33,45 @@ function getItem(
 }
 const items: MenuItem[] = [
   getItem("DashBoard", "1", <PieChartOutlined />),
-  getItem("News", "sub1", <MailOutlined />, [
+  getItem("My News", "sub1", <MailOutlined />, [
     getItem("News List", "2"),
     getItem("Post News", "3"),
     getItem("Edit News", "4"),
-    getItem("Banner", "5"),
   ]),
-  getItem("Users", "sub2", <AppstoreOutlined />, [
-    getItem("Users List", "6"),
-    getItem("Add User", "7"),
-  ]),
-  getItem("Logout", "8", <LogoutOutlined />),
+  getItem("Logout", "5", <LogoutOutlined />),
 ];
 
-function Admin1() {
+function Author() {
   let { name } = useParams();
   const [collapsed, setCollapsed] = useState(false);
-  const cookies = new Cookies();
   const [role, SetRole] = useState(null);
-  console.log(role);
+  const cookies = new Cookies();
+  const [user, setUser] = useState(useContext(userContext));
+
+  // alert(user.name);
 
   const onClick: MenuProps["onClick"] = (e) => {
     console.log(e);
 
     if (e.key === "1") {
-      window.location.href = "/admin/";
+      window.location.href = "/author/";
       // setSelectedTab("");
     }
     if (e.key === "2") {
-      window.location.href = "/admin/newslist";
+      window.location.href = "/author/newslist";
       // setSelectedTab("news");
     }
     if (e.key === "3") {
-      window.location.href = "/admin/postnews";
+      window.location.href = "/author/postnews";
       // setSelectedTab("postNews");
     }
-    if (e.key === "6") {
-      window.location.href = "/admin/userslist";
-    }
-    if (e.key === "7") {
-      window.location.href = "/admin/adduser";
-    }
-    if (e.key === "8") {
+    if (e.key === "5") {
       cookies.remove("token", { path: "/" });
       cookies.remove("name", { path: "/" });
       window.location.href = "/login";
     }
   };
+
   useEffect(() => {
     var myHeaders = new Headers();
     myHeaders.append("Authorization", cookies.get("token"));
@@ -96,10 +84,13 @@ function Admin1() {
 
     fetch("http://localhost:4000/users/auth", requestOptions)
       .then((response) => response.json())
-      .then((json) => SetRole(json.data.role))
+      .then((json) => {
+        SetRole(json.data.role);
+        setUser(json.data);
+      })
       .catch((e) => console.log(e));
   }, []);
-  if (role != null && role == "admin") {
+  if (role != null && role == "author") {
     return (
       <div
         className="admin2"
@@ -131,7 +122,7 @@ function Admin1() {
       </div>
     );
   }
-  if (role != null && role != "admin") {
+  if (role != null && role != "author") {
     return <PageNoFound />;
   } else {
     return (
@@ -144,4 +135,4 @@ function Admin1() {
     );
   }
 }
-export default Admin1;
+export default Author;

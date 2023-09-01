@@ -7,7 +7,7 @@ import Example from "./AreaChart";
 import PieChartt from "./PieChart";
 import Cookies from "universal-cookie";
 
-function DashBoard() {
+function AuthorDashBoard() {
   const items = [1, 2, 3, 4, 5];
   const [category, setTopCategory] = useState<Category[]>([]);
   const dataa: any = [];
@@ -54,4 +54,4 @@ function DashBoard() {
   }
   return <div>Loading</div>;
 }
-export default DashBoard;
+export default AuthorDashBoard;
