@@ -25,6 +25,7 @@ import AuthorDashBoard from "./components/Author/Dashboard";
 import React from "react";
 import { IUser } from "./hooks/newsHook";
 import Cookies from "universal-cookie";
+import AllRecentNews from "./pages/AllRecentNews";
 
 const initialUser: IUser = {
   id: 0,
@@ -73,6 +74,7 @@ function App() {
               <Route path="/entertainment" element={<Entertainment />} />
               <Route path="/politics" element={<Politics />} />
               <Route path="/detail" element={<NewsDetail />} />
+              <Route path="/recentNews" element={<AllRecentNews />} />
               <Route path="/login" element={<Login />} />
               <Route path="/nebil" element={<Todo />} />
             </Route>

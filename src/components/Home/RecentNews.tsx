@@ -33,7 +33,9 @@ function RecentNews(props: { recentNews: News[]; banner: News[] }) {
         <div className="right-child">
           <div className="home-recent-heading-right">
             <h2>Recent Posts</h2>
-            <h4>All Recent Posts</h4>
+            <h4>
+              <a href="recentNews">All Recent Posts</a>
+            </h4>
           </div>
           {props.recentNews.map((recentItem, index) => (
             <Link to="/detail" state={recentItem}>

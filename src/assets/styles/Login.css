@@ -14,8 +14,9 @@
     max-width: 300px;
     margin-left: 35vw;
     margin-top: 20vh;
-    background-color: whitesmoke;
+    background-color: black;
     padding: 2%;
+    border-radius: 15px;
   }
 
 @media (max-width: 800px){

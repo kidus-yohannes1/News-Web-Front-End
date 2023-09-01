@@ -1,15 +1,17 @@
-import React from "react";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import React, { useState } from "react";
+import { Breadcrumb, Layout, Menu, Tag, theme } from "antd";
 import "../assets/styles/NavBar.css";
 import { Outlet } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import { Input, Space } from "antd";
+import { News } from "../hooks/newsHook";
 
 const { Search } = Input;
 
 const { Header, Content, Footer } = Layout;
 
 function NavBar() {
+  const [searchValue, setSearchValue] = useState<News[]>([]);
   function myFunction() {
     const x: HTMLElement | null = document.getElementById("myTopnav");
     if (x) {
@@ -20,7 +22,14 @@ function NavBar() {
       }
     }
   }
-  const onSearch = (value: string) => console.log(value);
+  const onSearch = (value: string) => {
+    if (value != "") {
+      fetch(`http://localhost:4000/api/search/${value}`)
+        .then((response) => response.json())
+        .then((json) => setSearchValue(json.data))
+        .catch((e) => console.log(e));
+    }
+  };
 
   return (
     <>
@@ -63,7 +72,46 @@ function NavBar() {
           <i className="fa fa-bars"></i>
         </a>
       </div>
-      <Outlet />
+      {searchValue.length == 0 ? (
+        <Outlet />
+      ) : (
+        <div style={{ margin: "5% 10%" }}>
+          {searchValue.map((search, index) => (
+            <div key={index} className="right-category">
+              <div>
+                <img
+                  id="category-image"
+                  alt="example"
+                  style={{
+                    width: "230px",
+                    height: "250px",
+                  }}
+                  src={`${search.picture}`}
+                />
+              </div>
+
+              <div
+                style={{
+                  paddingLeft: "3%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-around",
+                }}
+              >
+                <div>
+                  <Tag style={{ backgroundColor: "red" }} color={"white"}>
+                    {search.tag}
+                  </Tag>
+                </div>
+
+                <h2>{search.title}</h2>
+                <p>{search.titleDescription}</p>
+                <p style={{ color: "gray" }}> {search.author}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 }

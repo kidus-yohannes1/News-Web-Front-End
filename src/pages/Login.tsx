@@ -58,6 +58,8 @@ function Login() {
       initialValues={{ remember: true }}
       onFinish={onFinish}
     >
+      <h2 style={{ color: "white" }}>Welcome Hagere News</h2>
+      <br></br>
       <Form.Item name="Email" rules={[{ required: true, type: "email" }]}>
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}
@@ -78,7 +80,7 @@ function Login() {
       </Form.Item>
       <Form.Item>
         <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox>Remember me</Checkbox>
+          <Checkbox style={{ color: "white" }}>Remember me</Checkbox>
         </Form.Item>
 
         <a className="login-form-forgot" href="">
