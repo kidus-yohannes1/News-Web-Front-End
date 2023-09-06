@@ -18,6 +18,7 @@ import PostNews from "./components/Admin/PostNews";
 import UsersList from "./components/Admin/UsersList";
 import AddUser from "./components/Admin/AddUser";
 import Successfully from "./components/Admin/successfully";
+import SuccessfullyAuthor from "./components/Author/successfully";
 import Author from "./pages/Author";
 import AuthorNewsList from "./components/Author/NewsList";
 import AuthorPostNews from "./components/Author/PostNews";
@@ -26,6 +27,7 @@ import React from "react";
 import { IUser } from "./hooks/newsHook";
 import Cookies from "universal-cookie";
 import AllRecentNews from "./pages/AllRecentNews";
+import EditNewsAuthor from "./components/Author/EditNews";
 
 const initialUser: IUser = {
   id: 0,
@@ -90,7 +92,9 @@ function App() {
               <Route index element={<AuthorDashBoard />} />
               <Route path="newslist" element={<AuthorNewsList />} />
               <Route path="postnews" element={<AuthorPostNews />} />
-              <Route path="successfully" element={<Successfully />} />
+              <Route path="editnews" element={<EditNewsAuthor />} />
+
+              <Route path="successfully" element={<SuccessfullyAuthor />} />
             </Route>
             <Route path="*" element={<PageNoFound />} />
           </Routes>

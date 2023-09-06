@@ -44,7 +44,7 @@ const items: MenuItem[] = [
 function Author() {
   let { name } = useParams();
   const [collapsed, setCollapsed] = useState(false);
-  const [role, SetRole] = useState(null);
+  const [role, SetRole] = useState<String>("");
   const cookies = new Cookies();
   const [user, setUser] = useState(useContext(userContext));
 
@@ -85,12 +85,16 @@ function Author() {
     fetch("http://localhost:4000/users/auth", requestOptions)
       .then((response) => response.json())
       .then((json) => {
-        SetRole(json.data.role);
-        setUser(json.data);
+        if (json.login == true) {
+          SetRole(json.data.role);
+          setUser(json.data);
+        } else {
+          SetRole("unknown");
+        }
       })
       .catch((e) => console.log(e));
   }, []);
-  if (role != null && role == "author") {
+  if (role == "author") {
     return (
       <div
         className="admin2"
@@ -122,7 +126,7 @@ function Author() {
       </div>
     );
   }
-  if (role != null && role != "author") {
+  if (role == "unknown") {
     return <PageNoFound />;
   } else {
     return (

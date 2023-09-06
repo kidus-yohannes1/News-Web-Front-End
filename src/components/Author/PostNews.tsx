@@ -24,6 +24,8 @@ function AuthorPostNews() {
   };
 
   const handlePost = () => {
+    // console.log("90328784478325438834282892");
+    // console.log(user);
     const formData = new FormData();
     formData.append("title", title);
     formData.append("titleDescription", titleDescription);
@@ -45,7 +47,12 @@ function AuthorPostNews() {
       body: formData,
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        if (data.success == true) {
+          window.location.href = `/author/successfully`;
+        }
+      })
+      .catch((error) => console.log("error", error));
 
     // for (let i = 0; i < normFile.length; i++) {
 

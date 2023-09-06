@@ -40,3 +40,10 @@ export interface IUser {
   token: any;
   CreatedAt: string;
 }
+
+export interface ISearch {
+  success: boolean;
+  searchText: string;
+  message: string;
+  data: News[];
+}

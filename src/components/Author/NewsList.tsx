@@ -4,6 +4,7 @@ import type { ColumnsType } from "antd/es/table";
 import { News } from "../../hooks/newsHook";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { userContext } from "../../App";
+import { Link } from "react-router-dom";
 
 interface DataType {
   key: string;
@@ -11,6 +12,27 @@ interface DataType {
   age: number;
   address: string;
   tags: string[];
+}
+function handelBanner(id: Number) {
+  var formdata = new FormData();
+
+  var requestOptions: any = {
+    method: "PATCH",
+    body: formdata,
+    redirect: "follow",
+  };
+
+  fetch(`http://localhost:4000/api/banner/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.success == true) {
+        alert("you have successfully changed a banner");
+        window.location.reload();
+      } else {
+        alert("unable to change the banner");
+      }
+    })
+    .catch((error) => console.log("error", error));
 }
 
 const columns: ColumnsType<News> = [
@@ -31,6 +53,16 @@ const columns: ColumnsType<News> = [
     ),
   },
   {
+    title: "Hash-Tag",
+    dataIndex: "hashTag",
+    key: "hashTag",
+    render: (tags: string) => (
+      <Tag color={tags == "ቢዝነስ" || tags == "ማህበራዊ" ? "red" : "green"}>
+        {tags.toUpperCase()}
+      </Tag>
+    ),
+  },
+  {
     title: "Author",
     key: "author",
     dataIndex: "author",
@@ -41,12 +73,21 @@ const columns: ColumnsType<News> = [
     render: (_, record) => (
       <Space size="middle">
         {/* <a>Delete</a> */}
-        <a>
+        <Link to="/author/editnews" state={record}>
           <EditOutlined />
-        </a>
+        </Link>
         <a>
           <DeleteOutlined />
         </a>
+        {record.hashTag != "banner" ? (
+          <Button
+            onClick={() => {
+              handelBanner(record.id);
+            }}
+          >
+            Banner
+          </Button>
+        ) : null}
       </Space>
     ),
   },

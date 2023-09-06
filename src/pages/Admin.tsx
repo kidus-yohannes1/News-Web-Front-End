@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   AppstoreOutlined,
   ContainerOutlined,
@@ -17,6 +17,7 @@ import PageNoFound from "./PageNotFound";
 import logo from "../assets/images/hagereLogo2.png";
 import Cookies from "universal-cookie";
 import { Player } from "@lottiefiles/react-lottie-player";
+import { userContext } from "../App";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -54,7 +55,8 @@ function Admin1() {
   let { name } = useParams();
   const [collapsed, setCollapsed] = useState(false);
   const cookies = new Cookies();
-  const [role, SetRole] = useState(null);
+  const [role, SetRole] = useState<string>("");
+  const [user, setUser] = useState(useContext(userContext));
   console.log(role);
 
   const onClick: MenuProps["onClick"] = (e) => {
@@ -96,10 +98,17 @@ function Admin1() {
 
     fetch("http://localhost:4000/users/auth", requestOptions)
       .then((response) => response.json())
-      .then((json) => SetRole(json.data.role))
+      .then((json) => {
+        if (json.login == true) {
+          SetRole(json.data.role);
+          setUser(json.data);
+        } else {
+          SetRole("unknown");
+        }
+      })
       .catch((e) => console.log(e));
   }, []);
-  if (role != null && role == "admin") {
+  if (role == "admin") {
     return (
       <div
         className="admin2"
@@ -131,7 +140,7 @@ function Admin1() {
       </div>
     );
   }
-  if (role != null && role != "admin") {
+  if (role == "unknown") {
     return <PageNoFound />;
   } else {
     return (

@@ -4,14 +4,15 @@ import "../assets/styles/NavBar.css";
 import { Outlet } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import { Input, Space } from "antd";
-import { News } from "../hooks/newsHook";
+import { ISearch, News } from "../hooks/newsHook";
 
 const { Search } = Input;
 
 const { Header, Content, Footer } = Layout;
 
 function NavBar() {
-  const [searchValue, setSearchValue] = useState<News[]>([]);
+  const [searchValue, setSearchValue] = useState<ISearch>();
+  const [searchText, setSearchText] = useState("");
   function myFunction() {
     const x: HTMLElement | null = document.getElementById("myTopnav");
     if (x) {
@@ -24,10 +25,13 @@ function NavBar() {
   }
   const onSearch = (value: string) => {
     if (value != "") {
+      setSearchText(value);
       fetch(`http://localhost:4000/api/search/${value}`)
         .then((response) => response.json())
-        .then((json) => setSearchValue(json.data))
+        .then((json) => setSearchValue(json))
         .catch((e) => console.log(e));
+    } else {
+      window.location.href = "/";
     }
   };
 
@@ -72,44 +76,57 @@ function NavBar() {
           <i className="fa fa-bars"></i>
         </a>
       </div>
-      {searchValue.length == 0 ? (
+      {searchValue == null ? (
         <Outlet />
       ) : (
         <div style={{ margin: "5% 10%" }}>
-          {searchValue.map((search, index) => (
-            <div key={index} className="right-category">
-              <div>
-                <img
-                  id="category-image"
-                  alt="example"
-                  style={{
-                    width: "230px",
-                    height: "250px",
-                  }}
-                  src={`${search.picture}`}
-                />
-              </div>
+          <div style={{ padding: "3% 0%" }}>
+            <h2>Search result for "{searchText}"</h2>
+          </div>
+          {searchValue.success == true ? (
+            <div>
+              {searchValue.data.map((search, index) => (
+                <div key={index} className="right-category">
+                  <div>
+                    <img
+                      id="category-image"
+                      alt="example"
+                      style={{
+                        width: "230px",
+                        height: "250px",
+                      }}
+                      src={`${search.picture}`}
+                    />
+                  </div>
 
-              <div
-                style={{
-                  paddingLeft: "3%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-around",
-                }}
-              >
-                <div>
-                  <Tag style={{ backgroundColor: "red" }} color={"white"}>
-                    {search.tag}
-                  </Tag>
+                  <div
+                    style={{
+                      paddingLeft: "3%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-around",
+                    }}
+                  >
+                    <div>
+                      <Tag style={{ backgroundColor: "red" }} color={"white"}>
+                        {search.tag}
+                      </Tag>
+                    </div>
+
+                    <h2>{search.title}</h2>
+                    <p>{search.titleDescription}</p>
+                    <p style={{ color: "gray" }}> {search.author}</p>
+                  </div>
                 </div>
-
-                <h2>{search.title}</h2>
-                <p>{search.titleDescription}</p>
-                <p style={{ color: "gray" }}> {search.author}</p>
-              </div>
+              ))}
             </div>
-          ))}
+          ) : (
+            <div>
+              <h1 style={{ textAlign: "center", paddingTop: "10%" }}>
+                {searchValue.message}
+              </h1>
+            </div>
+          )}
         </div>
       )}
     </>
