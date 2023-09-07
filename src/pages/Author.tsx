@@ -36,7 +36,7 @@ const items: MenuItem[] = [
   getItem("My News", "sub1", <MailOutlined />, [
     getItem("News List", "2"),
     getItem("Post News", "3"),
-    getItem("Edit News", "4"),
+    // getItem("Edit News", "4"),
   ]),
   getItem("Logout", "5", <LogoutOutlined />),
 ];

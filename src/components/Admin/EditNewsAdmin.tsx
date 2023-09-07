@@ -5,7 +5,7 @@ import { useLocation } from "react-router-dom";
 import { userContext } from "../../App";
 import { Category } from "../../hooks/newsHook";
 
-function EditNewsAuthor(props: any) {
+function EditNewsAdmin(props: any) {
   const location = useLocation();
   const propsData = location.state;
   const [categoryList, setCategoryList] = useState<Category[]>([]);
@@ -20,6 +20,8 @@ function EditNewsAuthor(props: any) {
   );
   const [tag, setTag] = useState(propsData.tag);
   const [hashTag, setHashTag] = useState(propsData.hashTag);
+  const [authorId, setAuthorId] = useState(propsData.userId);
+  const [authorName, setAuthorName] = useState(propsData.author);
   const [category, setCategory] = useState(propsData.categoryId);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [file, setFile] = useState(propsData.picture);
@@ -46,11 +48,11 @@ function EditNewsAuthor(props: any) {
     formData.append("title", title);
     formData.append("titleDescription", titleDescription);
     formData.append("newsDescription", newsDescription);
-    formData.append("author", user.name);
+    formData.append("author", authorName);
     formData.append("tag", tag);
     formData.append("hashTag", hashTag);
     formData.append("categoryId", category);
-    formData.append("userId", user.id.toString());
+    formData.append("userId", authorId);
     if (selectedFile) {
       formData.append("picture", selectedFile as any);
     } else {
@@ -63,7 +65,7 @@ function EditNewsAuthor(props: any) {
       .then((res) => res.json())
       .then((data) => {
         if (data.success == true) {
-          window.location.href = `/author/successfully`;
+          window.location.href = `/admin/successfully`;
         }
       })
       .catch((error) => console.log("error", error));
@@ -190,4 +192,4 @@ function EditNewsAuthor(props: any) {
     </div>
   );
 }
-export default EditNewsAuthor;
+export default EditNewsAdmin;

@@ -41,8 +41,8 @@ const items: MenuItem[] = [
   getItem("News", "sub1", <MailOutlined />, [
     getItem("News List", "2"),
     getItem("Post News", "3"),
-    getItem("Edit News", "4"),
-    getItem("Banner", "5"),
+    // getItem("Edit News", "4"),
+    // getItem("Banner", "5"),
   ]),
   getItem("Users", "sub2", <AppstoreOutlined />, [
     getItem("Users List", "6"),

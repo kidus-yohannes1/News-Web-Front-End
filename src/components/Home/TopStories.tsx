@@ -18,7 +18,7 @@ function TopStories(props: { topStories: News[] }) {
     minHeight: "250px",
     color: "white",
   };
-  const top_stories_body_right_image: {
+  const top_stories_body_right_image1: {
     background: string;
     backgroundSize: string;
     backgroundRepeat: string;
@@ -36,6 +36,23 @@ function TopStories(props: { topStories: News[] }) {
     paddingLeft: "2%",
   };
 
+  const top_stories_body_right_image2: {
+    background: string;
+    backgroundSize: string;
+    backgroundRepeat: string;
+    minHeight: string;
+    color: string;
+    alignItems: string;
+    paddingLeft: string;
+  } = {
+    background: `linear-gradient(to bottom, rgba(0,0,0,0) 20%, rgba(0,0,0,1)),url(${props.topStories[2].picture})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    minHeight: "250px",
+    color: "white",
+    alignItems: "baseline",
+    paddingLeft: "2%",
+  };
   return (
     <div className="top-stories">
       <div className="top-stories-title">
@@ -74,7 +91,7 @@ function TopStories(props: { topStories: News[] }) {
         >
           <div
             id="right-image-1"
-            style={top_stories_body_right_image}
+            style={top_stories_body_right_image1}
             className="top-stories-body-right-image"
           >
             <Tag
@@ -88,22 +105,22 @@ function TopStories(props: { topStories: News[] }) {
             <p style={{ color: "gray" }}> {props.topStories[1].author}</p>
           </div>
           <div
-            style={top_stories_body_right_image}
+            style={top_stories_body_right_image2}
             className="top-stories-body-right-image"
           >
             <Tag
               style={{ backgroundColor: "blue", marginTop: "100px" }}
               color={"white"}
             >
-              {props.topStories[1].tag}
+              {props.topStories[2].tag}
             </Tag>
-            <h3 id="k1">{props.topStories[1].title}</h3>
+            <h3 id="k1">{props.topStories[2].title}</h3>
             <p
               className="top-stories-body-right-author"
               style={{ color: "gray" }}
             >
               {" "}
-              {props.topStories[1].author}
+              {props.topStories[2].author}
             </p>
           </div>
         </div>

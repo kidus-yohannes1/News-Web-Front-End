@@ -34,6 +34,27 @@ function handelBanner(id: Number) {
     })
     .catch((error) => console.log("error", error));
 }
+function handelDelete(id: Number) {
+  var formdata = new FormData();
+
+  var requestOptions: any = {
+    method: "Delete",
+    body: formdata,
+    redirect: "follow",
+  };
+
+  fetch(`http://localhost:4000/api/news/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.success == true) {
+        alert("you have successfully deleted a news");
+        window.location.reload();
+      } else {
+        alert("unable to delete the news");
+      }
+    })
+    .catch((error) => console.log("error", error));
+}
 
 const columns: ColumnsType<News> = [
   {
@@ -77,16 +98,20 @@ const columns: ColumnsType<News> = [
           <EditOutlined />
         </Link>
         <a>
-          <DeleteOutlined />
+          <DeleteOutlined
+            onClick={() => {
+              handelDelete(record.id);
+            }}
+          />
         </a>
         {record.hashTag != "banner" ? (
-          <Button
+          <a
             onClick={() => {
               handelBanner(record.id);
             }}
           >
             Banner
-          </Button>
+          </a>
         ) : null}
       </Space>
     ),
@@ -105,13 +130,13 @@ function AuthorNewsList() {
     return (
       <div style={{ width: "80vw", margin: "0% 2%" }}>
         <div className="news-list-title">
-          <h2>Manage Users</h2>
+          <h2>My News List</h2>
           <Button
             onClick={() => (window.location.href = "adduser")}
             type="primary"
             size={"middle"}
           >
-            Add User
+            Post News
           </Button>
         </div>
         <br></br>

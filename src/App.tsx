@@ -28,6 +28,8 @@ import { IUser } from "./hooks/newsHook";
 import Cookies from "universal-cookie";
 import AllRecentNews from "./pages/AllRecentNews";
 import EditNewsAuthor from "./components/Author/EditNews";
+import EditNewsAdmin from "./components/Admin/EditNewsAdmin";
+import SuccessfullyAdmin from "./components/Admin/successfully";
 
 const initialUser: IUser = {
   id: 0,
@@ -86,7 +88,8 @@ function App() {
               <Route path="postnews" element={<PostNews />} />
               <Route path="userslist" element={<UsersList />} />
               <Route path="adduser" element={<AddUser />} />
-              <Route path="successfully" element={<Successfully />} />
+              <Route path="editnews" element={<EditNewsAdmin />} />
+              <Route path="successfully" element={<SuccessfullyAdmin />} />
             </Route>
             <Route path="/author" element={<Author />}>
               <Route index element={<AuthorDashBoard />} />

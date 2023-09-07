@@ -3,6 +3,7 @@ import { Button, Radio, Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { News } from "../../hooks/newsHook";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 interface DataType {
   key: string;
@@ -10,6 +11,48 @@ interface DataType {
   age: number;
   address: string;
   tags: string[];
+}
+function handelBanner(id: Number) {
+  var formdata = new FormData();
+
+  var requestOptions: any = {
+    method: "PATCH",
+    body: formdata,
+    redirect: "follow",
+  };
+
+  fetch(`http://localhost:4000/api/banner/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.success == true) {
+        alert("you have successfully changed a banner");
+        window.location.reload();
+      } else {
+        alert("unable to change the banner");
+      }
+    })
+    .catch((error) => console.log("error", error));
+}
+function handelDelete(id: Number) {
+  var formdata = new FormData();
+
+  var requestOptions: any = {
+    method: "Delete",
+    body: formdata,
+    redirect: "follow",
+  };
+
+  fetch(`http://localhost:4000/api/news/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.success == true) {
+        alert("you have successfully deleted a news");
+        window.location.reload();
+      } else {
+        alert("unable to delete the news");
+      }
+    })
+    .catch((error) => console.log("error", error));
 }
 
 const columns: ColumnsType<News> = [
@@ -40,12 +83,25 @@ const columns: ColumnsType<News> = [
     render: (_, record) => (
       <Space size="middle">
         {/* <a>Delete</a> */}
-        <a>
+        <Link to="/admin/editnews" state={record}>
           <EditOutlined />
-        </a>
+        </Link>
         <a>
-          <DeleteOutlined />
+          <DeleteOutlined
+            onClick={() => {
+              handelDelete(record.id);
+            }}
+          />
         </a>
+        {record.hashTag != "banner" ? (
+          <a
+            onClick={() => {
+              handelBanner(record.id);
+            }}
+          >
+            Banner
+          </a>
+        ) : null}
       </Space>
     ),
   },
@@ -63,13 +119,13 @@ function NewsList() {
     return (
       <div style={{ width: "80vw", margin: "0% 2%" }}>
         <div className="news-list-title">
-          <h2>Manage Users</h2>
+          <h2>News List</h2>
           <Button
             onClick={() => (window.location.href = "adduser")}
             type="primary"
             size={"middle"}
           >
-            Add User
+            Post News
           </Button>
         </div>
         <br></br>
