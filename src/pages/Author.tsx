@@ -1,18 +1,18 @@
-import React, { useEffect, useState, createContext, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   LogoutOutlined,
   MailOutlined,
   PieChartOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Button, Menu } from "antd";
-import AdminContent from "../components/Admin/AdminContent";
+import { Menu } from "antd";
 import { Outlet, useParams } from "react-router-dom";
 import PageNoFound from "./PageNotFound";
 import logo from "../assets/images/hagereLogo2.png";
 import Cookies from "universal-cookie";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { userContext } from "../App";
+import { auth } from "../hooks/Http";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -36,7 +36,6 @@ const items: MenuItem[] = [
   getItem("My News", "sub1", <MailOutlined />, [
     getItem("News List", "2"),
     getItem("Post News", "3"),
-    // getItem("Edit News", "4"),
   ]),
   getItem("Logout", "5", <LogoutOutlined />),
 ];
@@ -47,23 +46,15 @@ function Author() {
   const [role, SetRole] = useState<String>("");
   const cookies = new Cookies();
   const [user, setUser] = useState(useContext(userContext));
-
-  // alert(user.name);
-
   const onClick: MenuProps["onClick"] = (e) => {
-    console.log(e);
-
     if (e.key === "1") {
       window.location.href = "/author/";
-      // setSelectedTab("");
     }
     if (e.key === "2") {
       window.location.href = "/author/newslist";
-      // setSelectedTab("news");
     }
     if (e.key === "3") {
       window.location.href = "/author/postnews";
-      // setSelectedTab("postNews");
     }
     if (e.key === "5") {
       cookies.remove("token", { path: "/" });
@@ -73,27 +64,14 @@ function Author() {
   };
 
   useEffect(() => {
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", cookies.get("token"));
-
-    var requestOptions: any = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
-    fetch("http://localhost:4000/users/auth", requestOptions)
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.login == true) {
-          SetRole(json.data.role);
-          setUser(json.data);
-        } else {
-          SetRole("unknown");
-        }
-      })
-      .catch((e) => console.log(e));
+    if (cookies.get("token")) {
+      (async () => {
+        const home = await auth(cookies.get("token"));
+        setUser(home.data);
+      })();
+    }
   }, []);
+
   if (role == "author") {
     return (
       <div

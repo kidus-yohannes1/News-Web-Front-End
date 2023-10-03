@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
 import "../assets/styles/Login.css";
-import { postRequest } from "../hooks/newsHook";
-import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 function Login() {
@@ -29,16 +27,13 @@ function Login() {
     fetch("http://localhost:4000/users/login", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
-
         if (result.success == true && result.data.role == "admin") {
           cookies.remove("token", { path: "/" });
           cookies.remove("name", { path: "/" });
           cookies.set("token", result.data.token, { path: "/" });
           cookies.set("name", result.data.userName, { path: "/" });
           window.location.href = `/admin`;
-        }
-        if (result.success == true && result.data.role == "author") {
+        } else if (result.success == true && result.data.role == "author") {
           cookies.remove("token", { path: "/" });
           cookies.remove("name", { path: "/" });
           cookies.set("token", result.data.token, { path: "/" });
@@ -92,7 +87,6 @@ function Login() {
         <Button type="primary" htmlType="submit" className="login-form-button">
           Log in
         </Button>
-        {/* Or <a href="">register now!</a> */}
       </Form.Item>
     </Form>
   );

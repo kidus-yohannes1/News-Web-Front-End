@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import { Input, Space } from "antd";
 import { ISearch, News } from "../hooks/newsHook";
+import { search } from "../hooks/Http";
 
 const { Search } = Input;
 
@@ -23,13 +24,19 @@ function NavBar() {
       }
     }
   }
+
   const onSearch = (value: string) => {
     if (value != "") {
       setSearchText(value);
-      fetch(`http://localhost:4000/api/search/${value}`)
-        .then((response) => response.json())
-        .then((json) => setSearchValue(json))
-        .catch((e) => console.log(e));
+
+      (async () => {
+        const result = await search(value);
+        setSearchValue(result);
+      })();
+      // fetch(`http://localhost:4000/api/search/${value}`)
+      //   .then((response) => response.json())
+      //   .then((json) => setSearchValue(json))
+      //   .catch((e) => console.log(e));
     } else {
       window.location.href = "/";
     }

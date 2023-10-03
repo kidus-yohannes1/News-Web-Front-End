@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "../assets/styles/newsDetail.css";
 import Footer from "../components/Footer";
+import { getHomePage } from "../hooks/Http";
 import { News } from "../hooks/newsHook";
 function NewsDetail(props: any) {
   const location = useLocation();
@@ -11,9 +12,10 @@ function NewsDetail(props: any) {
 
   const [data, setData] = useState<News[]>([]);
   useEffect(() => {
-    fetch("http://localhost:4000/api/news/home")
-      .then((response) => response.json())
-      .then((json) => setData(json.Recent));
+    (async () => {
+      const home = await getHomePage();
+      setData(home.Recent);
+    })();
   }, []);
   return (
     <>

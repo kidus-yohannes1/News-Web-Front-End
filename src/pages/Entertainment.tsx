@@ -4,6 +4,7 @@ import "../assets/styles/Category.css";
 import Footer from "../components/Footer";
 import YouAlsolLike from "../components/YouAlsoLike";
 import { News } from "../hooks/newsHook";
+import { getHomePage } from "../hooks/Http";
 function Entertainment() {
   const [entertainment, setEntertainment] = useState<News[]>([]);
   const [data, setData] = useState<News[]>([]);
@@ -13,9 +14,10 @@ function Entertainment() {
       .then((json) => setEntertainment(json.data));
   }, []);
   useEffect(() => {
-    fetch("http://localhost:4000/api/news/home")
-      .then((response) => response.json())
-      .then((json) => setData(json.Recent));
+    (async () => {
+      const home = await getHomePage();
+      setData(home.Recent);
+    })();
   }, []);
   if (entertainment != null) {
     return (

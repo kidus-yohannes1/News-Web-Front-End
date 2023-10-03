@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "../assets/styles/Category.css";
 import Footer from "../components/Footer";
 import YouAlsolLike from "../components/YouAlsoLike";
+import { getHomePage } from "../hooks/Http";
 import { News } from "../hooks/newsHook";
 function Politics() {
   const [politics, setPolitics] = useState<News[]>([]);
@@ -13,9 +14,10 @@ function Politics() {
       .then((json) => setPolitics(json.data));
   }, []);
   useEffect(() => {
-    fetch("http://localhost:4000/api/news/home")
-      .then((response) => response.json())
-      .then((json) => setData(json.Recent));
+    (async () => {
+      const home = await getHomePage();
+      setData(home.Recent);
+    })();
   }, []);
   if (politics != null) {
     return (

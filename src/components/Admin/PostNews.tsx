@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, Modal, Result, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useContext, useEffect, useState } from "react";
 import { userContext } from "../../App";
@@ -14,14 +14,17 @@ function PostNews() {
   const [category, setCategory] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [user, setUser] = useState(useContext(userContext));
-  const [file, setFile] = useState("");
 
+  console.log("/////[[[[][][psfkjnvkjsz");
+
+  console.log(user);
+
+  const [file, setFile] = useState("");
   useEffect(() => {
     fetch(`http://localhost:4000/api/categories`)
       .then((response) => response.json())
       .then((json) => setCategoryList(json.data));
   }, []);
-
   const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     setSelectedFile(file);
@@ -29,7 +32,6 @@ function PostNews() {
       event.target.files ? URL.createObjectURL(event.target.files[0]) : ""
     );
   };
-
   const handlePost = () => {
     const formData = new FormData();
     formData.append("title", title);
@@ -46,7 +48,12 @@ function PostNews() {
       body: formData,
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        if (data.success == true) {
+          window.location.href = `/author/successfully`;
+        }
+      })
+      .catch((error) => console.log("error", error));
   };
   return (
     <div>
@@ -118,6 +125,9 @@ function PostNews() {
               })}
             </Select>
           </Form.Item>
+          {/* <Form.Item label="Author" name="Author" rules={[{ required: true }]}>
+            <Input onChange={(e) => setAuthor(e.target.value)} />
+          </Form.Item> */}
           <Form.Item
             label="Upload"
             name="Upload"

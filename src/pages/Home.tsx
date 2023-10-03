@@ -6,7 +6,7 @@ import "../assets/styles/Home.css";
 import { IHome, News } from "../hooks/newsHook";
 import { useEffect, useState } from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
-import getHomePage from "../hooks/Http";
+import { getHomePage } from "../hooks/Http";
 import Advertisment from "../components/Home/Advertisment";
 import Footer from "../components/Footer";
 function Home() {
@@ -17,7 +17,6 @@ function Home() {
     TopStories: [],
     TreandingNews: [],
   });
-  console.log(data);
 
   useEffect(() => {
     (async () => {

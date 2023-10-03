@@ -1,23 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
   AppstoreOutlined,
-  ContainerOutlined,
-  DesktopOutlined,
   LogoutOutlined,
   MailOutlined,
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
   PieChartOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Button, Menu } from "antd";
-import AdminContent from "../components/Admin/AdminContent";
+import { Menu } from "antd";
 import { Outlet, useParams } from "react-router-dom";
 import PageNoFound from "./PageNotFound";
 import logo from "../assets/images/hagereLogo2.png";
 import Cookies from "universal-cookie";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { userContext } from "../App";
+import { auth } from "../hooks/Http";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -41,8 +37,6 @@ const items: MenuItem[] = [
   getItem("News", "sub1", <MailOutlined />, [
     getItem("News List", "2"),
     getItem("Post News", "3"),
-    // getItem("Edit News", "4"),
-    // getItem("Banner", "5"),
   ]),
   getItem("Users", "sub2", <AppstoreOutlined />, [
     getItem("Users List", "6"),
@@ -51,28 +45,24 @@ const items: MenuItem[] = [
   getItem("Logout", "8", <LogoutOutlined />),
 ];
 
-function Admin1() {
+function Admin() {
   let { name } = useParams();
   const [collapsed, setCollapsed] = useState(false);
   const cookies = new Cookies();
   const [role, SetRole] = useState<string>("");
   const [user, setUser] = useState(useContext(userContext));
-  console.log(role);
 
   const onClick: MenuProps["onClick"] = (e) => {
     console.log(e);
 
     if (e.key === "1") {
       window.location.href = "/admin/";
-      // setSelectedTab("");
     }
     if (e.key === "2") {
       window.location.href = "/admin/newslist";
-      // setSelectedTab("news");
     }
     if (e.key === "3") {
       window.location.href = "/admin/postnews";
-      // setSelectedTab("postNews");
     }
     if (e.key === "6") {
       window.location.href = "/admin/userslist";
@@ -87,27 +77,14 @@ function Admin1() {
     }
   };
   useEffect(() => {
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", cookies.get("token"));
-
-    var requestOptions: any = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-
-    fetch("http://localhost:4000/users/auth", requestOptions)
-      .then((response) => response.json())
-      .then((json) => {
-        if (json.login == true) {
-          SetRole(json.data.role);
-          setUser(json.data);
-        } else {
-          SetRole("unknown");
-        }
-      })
-      .catch((e) => console.log(e));
+    if (cookies.get("token")) {
+      (async () => {
+        const home = await auth(cookies.get("token"));
+        setUser(home.data);
+      })();
+    }
   }, []);
+
   if (role == "admin") {
     return (
       <div
@@ -126,7 +103,6 @@ function Admin1() {
 
           <Menu
             onClick={onClick}
-            // defaultSelectedKeys={["1"]}
             defaultOpenKeys={["sub1"]}
             mode="inline"
             theme="dark"
@@ -153,4 +129,4 @@ function Admin1() {
     );
   }
 }
-export default Admin1;
+export default Admin;

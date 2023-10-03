@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
@@ -10,14 +9,12 @@ import Entertainment from "./pages/Entertainment";
 import Politics from "./pages/Politics";
 import NewsDetail from "./pages/NewsDetail";
 import Login from "./pages/Login";
-import Todo from "./pages/Nebil";
 import PageNoFound from "./pages/PageNotFound";
 import DashBoard from "./components/Admin/Dashboard";
 import NewsList from "./components/Admin/NewsList";
 import PostNews from "./components/Admin/PostNews";
 import UsersList from "./components/Admin/UsersList";
 import AddUser from "./components/Admin/AddUser";
-import Successfully from "./components/Admin/successfully";
 import SuccessfullyAuthor from "./components/Author/successfully";
 import Author from "./pages/Author";
 import AuthorNewsList from "./components/Author/NewsList";
@@ -30,6 +27,7 @@ import AllRecentNews from "./pages/AllRecentNews";
 import EditNewsAuthor from "./components/Author/EditNews";
 import EditNewsAdmin from "./components/Admin/EditNewsAdmin";
 import SuccessfullyAdmin from "./components/Admin/successfully";
+import { auth } from "./hooks/Http";
 
 const initialUser: IUser = {
   id: 0,
@@ -45,27 +43,17 @@ const initialUser: IUser = {
 export const userContext = createContext<IUser>({} as IUser);
 
 function App() {
-  // const data = React.useContext(userContext);
   const [user, setUser] = useState<IUser>(initialUser);
   const cookies = new Cookies();
+
   useEffect(() => {
     if (cookies.get("token")) {
-      var myHeaders = new Headers();
-      myHeaders.append("Authorization", cookies.get("token"));
-      var requestOptions: any = {
-        method: "GET",
-        headers: myHeaders,
-        redirect: "follow",
-      };
-
-      fetch("http://localhost:4000/users/auth", requestOptions)
-        .then((response) => response.json())
-        .then((json) => {
-          setUser(json.data);
-        })
-        .catch((e) => console.log(e));
+      (async () => {
+        const home = await auth(cookies.get("token"));
+        setUser(home.data);
+      })();
     }
-  }, [App]);
+  }, []);
 
   return (
     <div className="App">
@@ -80,7 +68,6 @@ function App() {
               <Route path="/detail" element={<NewsDetail />} />
               <Route path="/recentNews" element={<AllRecentNews />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/nebil" element={<Todo />} />
             </Route>
             <Route path="/admin" element={<Admin />}>
               <Route index element={<DashBoard />} />

@@ -47,3 +47,11 @@ export interface ISearch {
   message: string;
   data: News[];
 }
+export interface IRecent {
+  success: boolean;
+  data: News[];
+}
+export interface IAuth {
+  login: boolean;
+  data: IUser;
+}

@@ -1,17 +1,19 @@
 import { Tag } from "antd";
 import { useEffect, useState } from "react";
 import { News } from "../hooks/newsHook";
+import { allRecent } from "../hooks/Http";
 
 function AllRecentNews() {
   const [recentNews, setRecentNews] = useState<News[]>([]);
   console.log(recentNews);
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/recentnews/")
-      .then((response) => response.json())
-      .then((json) => setRecentNews(json.data))
-      .catch((e) => console.log(e));
+    (async () => {
+      const home = await allRecent();
+      setRecentNews(home.data);
+    })();
   }, []);
+
   if (recentNews != null) {
     return (
       <div className="trending-stories" style={{ paddingBottom: "20vh" }}>
